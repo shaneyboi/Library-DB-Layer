@@ -17,14 +17,8 @@ namespace UHHiloLibrary\Circulation;
 */
 class NoBarcode extends InternalCount
 {
-    /**
-     * Public Var: Stores the id used in the mysql table. 
-     **/
 	public $id_field = 'fld_recorded';
 
-    /**
-     * Public Var: Stores the table being used the in the mysql DB.
-     **/
 	public $table_name = 'tbl_item_nobarcode INNER JOIN tbl_location_stat ON fld_stat_id=fld_location_num';
 
     /**
@@ -42,8 +36,8 @@ class NoBarcode extends InternalCount
         return $this->run($query, $record);
     } //insert()
 
-    /** Get the tally data from the previous insert.
-     * 
+    /** 
+     * Get the tally data from the previous insert. 
      * @return - array of 1 result or false.
      **/
     public function getTallyInfo(){
@@ -52,6 +46,6 @@ class NoBarcode extends InternalCount
             return $rs[0];
         }
         return false;
-    }//getTallyInfo
+    }//getTallyInfo()
 }
 ?>

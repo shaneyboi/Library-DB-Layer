@@ -13,14 +13,8 @@ require_once ("_circulationLogin.php");
 */
 class InternalCount extends DBModel
 {
-    /**
-     * Public Var: Stores the id used in the mysql table. 
-     **/
 	public $id_field = 'fld_datetime';
 
-    /**
-     * Public Var: Stores the table being used the in the mysql DB.
-     **/
 	public $table_name = 'view_ic_all';
 
     /**
@@ -35,39 +29,6 @@ class InternalCount extends DBModel
     	}
     	$this->db_conn = $dbh;
 	}
-
-    /**
-     * TODO REMOVE THIS TABLE STRUCTURE.
-     * Allows the table to be changed to query a different table.
-     * @param - string - choose which table the user wishes to view.
-     **/
-    public function change_tbl($table)
-    {
-        switch ($table) {
-            case 'collections':
-                $tbl[0] = "tbl_location_stat"; 
-                $tbl[1] = "fld_location_num";
-                break;
-
-            case 'info':
-                $tbl[0] = "tbl_item"; 
-                $tbl[1] = "fld_barcode";
-                break;
-
-            case 'view':
-                $tbl[0] = "view_ic_all";
-                $tbl[1] = "fld_datetime";
-                break;
-
-            case 'scan':
-            default:
-                $tbl[0] = "tbl_item_scanned";
-                $tbl[1] = "fld_id";
-                break;
-        }
-        $this->table_name = $tbl[0];
-        $this->id_field = $tbl[1];
-    }//change_tbl()
 
 	/**
 	 * 	Function that gets the result from id.
@@ -99,18 +60,19 @@ class InternalCount extends DBModel
     } //getViaBarcode()
 
     /**
-     *  Function that gets the result from id.
-     *  @param - integer - $id - this should be the primary key number on the table. 
-     *  @return array | false - returns an array of array which will only return the 1st row of the array. 
-     * */
-    public function getViaTimestamp($id)
+     * @param - array - array must contain the the id field.
+     * @return - array return the array of rows or false.
+     **/
+    public function getTotalByDay($id)
     {
-        $rs = $this->select("{$this->id_field} = :{$this->id_field}",'' , array("{$this->id_field}" => $id));
+        $query = "SELECT *, COUNT(*) AS 'count' FROM {$this->table_name} WHERE {$this->id_field} = :{$this->id_field} GROUP BY DATE(fld_datetime), fld_barcode";
+
+        $rs = $this->run($query ,array("{$this->id_field}"=>$id));
         if($rs && count($rs)){
-            return $rs[0];
+            return $rs;
         }
         return false;
-    }//getViaTimestamp()
+    }
 
     /**
      *  @param - array - record - This record should have the required dates to query the db.
@@ -138,21 +100,6 @@ class InternalCount extends DBModel
 
         $rs = $this->run($query.$order_by , $record);
         if($rs){
-            return $rs;
-        }
-        return false;
-    }
-
-    /**
-     * @param - array - array must contain the the id field.
-     * @return - array return the array of rows or false.
-     **/
-    public function getRows($id)
-    {
-        $query = "SELECT *, COUNT(*) AS 'count' FROM {$this->table_name} WHERE {$this->id_field} = :{$this->id_field} GROUP BY DATE(fld_datetime), fld_barcode";
-
-        $rs = $this->run($query ,array("{$this->id_field}"=>$id));
-        if($rs && count($rs)){
             return $rs;
         }
         return false;

@@ -14,14 +14,9 @@ use UHHiloLibrary\DB\DBModel as DBModel;
 */
 class ExitCount extends DBModel 
 {
-    /**
-     * Public Var: Stores the id used in the mysql table. 
-     **/
+
 	public $id_field = 'CreateDate';
 
-    /**
-     * Public Var: Stores the table being used the in the mysql DB.
-     **/
 	public $table_name = 'v_vt_SensorDataView';
 
     /**

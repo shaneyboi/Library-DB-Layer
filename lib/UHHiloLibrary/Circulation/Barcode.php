@@ -4,14 +4,9 @@ namespace UHHiloLibrary\Circulation;
 
 class Barcode extends InternalCount
 {
-	/**
-     * Public Var: Stores the id used in the mysql table. 
-     **/
+
 	public $id_field = 'fld_id';
 
-    /**
-     * Public Var: Stores the table being used the in the mysql DB.
-     **/
 	public $table_name = 'tbl_item_scanned';
 
 	/**

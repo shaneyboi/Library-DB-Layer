@@ -27,6 +27,11 @@ class DBModel
 	protected $last_query = '';
 
     /**
+     * Protected Var: Stores the last data inserted.
+     **/
+    protected $last_insert = '';
+
+    /**
      * Public Var: Stores the id used in the mysql table. 
      **/
 	public $id_field = '';
