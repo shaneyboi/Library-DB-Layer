@@ -41,7 +41,8 @@ class ExitCount extends DBModel
      * Function that returns the current traffic today. 
      * @return - integer
      **/
-    public function getToday(){
+    public function getToday()
+    {
         $today = date('Y-m-d');
         $query = "SELECT SUM(ValueA) FROM v_vt_SensorDataView WHERE CONVERT(Date, CreateDate)='".$today."' GROUP BY CONVERT(Date, CreateDate)";
         $result = $this->run_query($query);
@@ -54,7 +55,8 @@ class ExitCount extends DBModel
      * @param - $date(required) - date - This date must be in the form of YYYY-MM-DD.
      * @return - integer
      **/
-    public function get($date){
+    public function get($date)
+    {
         $query = "SELECT SUM(ValueA) FROM v_vt_SensorDataView WHERE CONVERT(Date, CreateDate)='".$date."' GROUP BY CONVERT(Date, CreateDate)";
         $result = $this->run_query($query);
 
@@ -67,7 +69,8 @@ class ExitCount extends DBModel
      * @param - $end(required) - date - This date must be in the form of YYYY-MM-DD.
      * @return - integer.
      **/
-    public function getSumBetween($start, $end){
+    public function getSumBetween($start, $end)
+    {
         $sum = 0;
         $query = "SELECT SUM(ValueA) FROM v_vt_SensorDataView WHERE CONVERT(Date, CreateDate) BETWEEN '".$start."' AND '".$end."' GROUP BY CONVERT(Date, CreateDate) ORDER BY CONVERT(Date, CreateDate)";
         $result = $this->run_query($query);
@@ -85,7 +88,8 @@ class ExitCount extends DBModel
      * @param - $end(required) - date - This date must be in the form of YYYY-MM-DD.
      * @return - array of dates with integers.
      **/
-    public function getBetween($start, $end){
+    public function getBetween($start, $end)
+    {
         $query = "SELECT CONVERT(Date, CreateDate) AS 'The_Date', SUM(ValueA) AS 'Count' FROM v_vt_SensorDataView WHERE CONVERT(Date, CreateDate) BETWEEN '".$start."' AND '".$end."' GROUP BY CONVERT(Date, CreateDate) ORDER BY CONVERT(Date, CreateDate)";
         $result = $this->run_query($query);
 
