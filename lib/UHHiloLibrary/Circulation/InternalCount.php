@@ -4,7 +4,6 @@ namespace UHHiloLibrary\Circulation;
 use UHHiloLibrary\DB\DBModel as DBModel;
 use PDO;
 
-require_once ("_circulationLogin.php");
 
 /** 
 * 
@@ -23,7 +22,7 @@ class InternalCount extends DBModel
      **/
 	public function __construct()
 	{
-        $dbh = new PDO("mysql:host={$host};dbname={$dbname}", $user, $pwd);
+        $dbh = require("_circulationLogin.php");
     	if (!$dbh) {
         	die("NO MYSQL CONNECTION");
     	}
@@ -65,9 +64,9 @@ class InternalCount extends DBModel
      **/
     public function getTotalByDay($id)
     {
-        $query = "SELECT *, COUNT(*) AS 'count' FROM {$this->table_name} WHERE {$this->id_field} = :{$this->id_field} GROUP BY DATE(fld_datetime), fld_barcode";
+        $query = "SELECT *, COUNT(*) AS 'count' FROM view_circ_stats WHERE the_date = :the_date GROUP BY DATE(fld_datetime), fld_barcode";
 
-        $rs = $this->run($query ,array("{$this->id_field}"=>$id));
+        $rs = $this->run($query ,array("the_date"=>$id));
         if($rs && count($rs)){
             return $rs;
         }

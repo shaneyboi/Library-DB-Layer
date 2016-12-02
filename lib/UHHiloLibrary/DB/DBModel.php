@@ -3,8 +3,6 @@ namespace UHHiloLibrary\DB;
 
 use PDO;
 
-require_once ('_voyager.php');
-
 /**
 * Basic DB Model Layer.
 * 
@@ -52,7 +50,7 @@ class DBModel
      **/
 	public function __construct()
 	{
-        $dbh = new PDO("oci:dbname=".$dbname, $user, $pwd);
+        $dbh = require('_voyagerLogin.php');
     	if (!$dbh) {
         	die("NO VOYAGER CONNECTION");
     	}

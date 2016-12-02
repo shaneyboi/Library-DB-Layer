@@ -16,7 +16,7 @@ $DB = array(
 	"Voyager" => new Voyager(),
 	"Status" => new Status(),
 	"Study Room" => new StudyRoom(),
-	"Internal" => new InternalCount(),
+	"Internal Count" => new InternalCount(),
 	"Exit" => new ExitCount(),
 	"Information" => new Information()
 );
@@ -27,7 +27,7 @@ $date = '10/01/2016';
 
 echo "<ol>";
 foreach ($DB as $key => $value) {
-	echo "<li>{$key}: {$value->check_connection()}</li>";
+	echo "<li>{$key}: {$value->checkConnection()}</li>";
 }
 echo "</ol>";
 
